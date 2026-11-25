@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#244d3e">
+  <meta name="description" content="수면을 기록하고, 오늘의 작은 운동 습관을 시작하세요.">
+  <title>하루핏 · 잘 자고, 조금씩 움직이기</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="logic.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="header wrap">
+    <a class="brand" href="#today" aria-label="하루핏 홈"><span class="brand-icon">h.</span>하루핏<span class="brand-caption">나를 돌보는 작은 습관</span></a>
+    <nav aria-label="메인 메뉴"><a href="#today">오늘</a><a href="#weekly">주간 기록</a><a href="#settings">알림 설정</a></nav>
+  </header>
+  <main class="wrap">
+    <section id="today" class="intro">
+      <p id="today-date" class="eyebrow"></p>
+      <h1>잘 자고, 조금씩 움직이기<span class="heading-dot">.</span></h1>
+      <p class="muted">오늘의 컨디션에 맞춰, 작은 실천 하나부터 시작해요.</p>
+    </section>
+
+    <div class="main-grid">
+      <section class="exercise-card" aria-labelledby="exercise-heading">
+        <div class="card-top"><span class="eyebrow">TODAY’S LITTLE MOVE</span><span id="mode-badge" class="pill">평소 모드</span></div>
+        <h2 id="exercise-heading">오늘의 운동</h2>
+        <p id="exercise-reason" class="exercise-reason">지난밤 수면을 기록하면 오늘의 운동을 제안해요.</p>
+        <div class="exercise-main"><div><p id="exercise-type" class="exercise-type">나에게 맞는 운동</p><p class="big-number"><span id="exercise-minutes">—</span><span class="unit">분</span></p></div><div class="move-art" aria-hidden="true"><svg viewBox="0 0 140 150" fill="none"><circle cx="77" cy="25" r="12" fill="currentColor"/><path d="M69 50 51 83 26 78M70 50 92 68 115 47M65 60 81 99 109 128M80 98 50 105 36 134" stroke="currentColor" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 25 33 19M117 94 128 99" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div></div>
+        <p id="exercise-detail" class="exercise-detail">기록은 간단하게, 실천은 부담 없이.</p>
+        <button id="complete-button" class="complete-button" type="button" disabled>수면을 먼저 기록해 주세요</button>
+        <p class="hero-footnote">습관을 시작하기 위한 작은 목표예요. 피곤하면 휴식을 우선해요.</p>
+      </section>
+
+      <section class="card sleep-card" aria-labelledby="sleep-heading">
+        <div class="card-top"><span class="mini-icon" aria-hidden="true">☾</span><span class="small-label">SLEEP LOG</span></div>
+        <h2 id="sleep-heading">지난밤, 얼마나 잤나요?</h2>
+        <p class="muted">잠든 시간과 일어난 시간을 알려주세요.</p>
+        <form id="sleep-form">
+          <label for="record-date">기상한 날짜</label>
+          <input id="record-date" type="date" required>
+          <div class="time-inputs"><div><label for="bedtime">잠든 시간</label><input id="bedtime" type="time" value="23:00" required></div><span aria-hidden="true">—</span><div><label for="waketime">일어난 시간</label><input id="waketime" type="time" value="07:00" required></div></div>
+          <p id="sleep-preview" class="sleep-preview" aria-live="polite"></p>
+          <button class="primary-button" type="submit">수면 기록 저장</button>
+          <p class="small muted">취침 시각이 기상 시각보다 늦으면 전날 취침으로 계산해요.</p>
+        </form>
+      </section>
+    </div>
+
+    <section class="stats" aria-label="오늘의 요약">
+      <div class="stat"><span class="stat-icon" aria-hidden="true">☾</span><div><p class="muted">지난밤 수면</p><p id="sleep-stat" class="stat-value">기록 전</p></div></div>
+      <div class="stat"><span class="stat-icon" aria-hidden="true">◉</span><div><p class="muted">오늘의 컨디션</p><p id="condition-stat" class="stat-value">기록 전</p><p id="condition-detail" class="small muted">수면을 기록하면 표시돼요</p></div></div>
+      <div class="stat"><span class="stat-icon" aria-hidden="true">✦</span><div><p class="muted">연속 운동 달성</p><p class="stat-value"><span id="streak-stat">0</span>일 <span class="stat-sub">차근차근 쌓아가요</span></p></div></div>
+    </section>
+
+    <section id="weekly" class="card weekly-card" aria-labelledby="weekly-heading">
+      <div class="section-heading"><div><p class="eyebrow green">MY WEEK</p><h2 id="weekly-heading">이번 주의 작은 변화</h2></div><span id="week-range" class="small muted"></span></div>
+      <div class="weekly-grid"><div><div class="chart-legend"><span><i class="legend-square"></i>수면 시간</span><span>점선: 8시간 참고선 · ✓ 운동 완료</span></div><div id="sleep-chart" class="chart" role="img"></div><p class="small muted">빈 막대는 수면 미기록이에요. 막대를 누르면 그날의 기록을 수정할 수 있어요.</p></div>
+      <div class="report"><div class="report-numbers"><div><p class="small muted">평균 수면</p><strong id="average-sleep">—</strong></div><div><p class="small muted">7일 운동 달성률</p><strong id="completion-rate">0%</strong></div></div><p id="report-tip" class="report-tip">첫 기록부터 변화가 시작돼요.</p><p id="sleep-relationship" class="small muted"></p></div></div>
+    </section>
+
+    <section id="settings" class="settings-grid" aria-label="생활 설정">
+      <div class="card"><p class="eyebrow green">MY PACE</p><h2>내 일정에 맞게</h2><p class="muted">바쁜 날에도 무리하지 않도록 조절해요.</p><div class="mode-options" role="group" aria-label="생활 모드"><button type="button" data-mode="normal" aria-pressed="true">평소</button><button type="button" data-mode="exam" aria-pressed="false">시험 기간</button><button type="button" data-mode="vacation" aria-pressed="false">방학</button></div><p id="mode-description" class="small muted"></p></div>
+      <div class="card"><div class="section-heading"><div><p class="eyebrow green">GENTLE REMINDER</p><h2>잊지 않게, 가볍게</h2></div><label class="toggle-label"><input id="reminders-enabled" type="checkbox">알림 켜기</label></div><div class="reminder-inputs"><div><label for="bed-reminder">취침 준비</label><input id="bed-reminder" type="time" value="23:00"></div><div><label for="exercise-reminder">운동 시작</label><input id="exercise-reminder" type="time" value="18:00"></div></div><p class="small muted">페이지를 열어 둔 동안 알림을 표시해요. 운동 미완료 시 30분 뒤 한 번 더 알려드려요.</p><button id="notification-button" class="text-button" type="button">브라우저 알림도 사용하기</button><p id="notification-status" class="small muted" aria-live="polite"></p></div>
+    </section>
+    <aside class="health-note"><strong>참고해 주세요</strong><p>컨디션 점수와 운동 제안은 이 앱의 간단한 습관 형성 규칙이며 의학적 평가가 아니에요. 제안 시간은 하루 전체 권장 운동량과 달라요. 청소년의 일반적인 권장량은 수면 8–10시간, 신체활동 하루 60분 이상이에요. <a href="https://www.cdc.gov/sleep/about/" target="_blank" rel="noopener noreferrer">수면 기준</a> · <a href="https://www.cdc.gov/physical-activity-basics/guidelines/children.html" target="_blank" rel="noopener noreferrer">신체활동 기준</a></p></aside>
+    <footer><a class="brand" href="#today">하루핏<span class="heading-dot">.</span></a><p>어제보다 조금 더, 나를 돌보는 하루.</p><p class="small">기록은 이 브라우저에만 저장돼요.</p></footer>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <div id="reminder-banner" class="reminder-banner" role="status" hidden><span id="reminder-message"></span><button id="dismiss-reminder" type="button" aria-label="알림 닫기">닫기</button></div>
+</body>
+</html>
